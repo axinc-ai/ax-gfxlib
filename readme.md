@@ -7,13 +7,13 @@
 
 ### 開発環境
 
-ハードウェア: MacBook Air (M1,2020)
-OS: macOS Monterey Version 12.6.2
-Xcode: Xcode Version 13.3
+ハードウェア: MacBook Air (M1,2020)  
+OS: macOS Monterey Version 12.6.2  
+Xcode: Xcode Version 13.3  
 
 ### ビルド
 
-Xcodeから下記のプロジェクトを開きます。
+Xcodeから下記のプロジェクトを開きます。  
 AXGLExample/AXGLExample.xcodeproj
 
 ターゲットを選択してProduct->Buildにてビルドを行います。
@@ -44,7 +44,7 @@ UIViewを継承したクラスのlayerClassにおいてCAMetalLayerを返しま�
 }
 ```
 
-MetalのDrawableはGLESと異なるため、CAMetalLayerをストレージに指定してRenderbufferを作成することによって、オンスクリーンのFramebufferを構築します。
+MetalのDrawableはGLESと異なるため、CAMetalLayerをストレージに指定してRenderbufferを作成することによって、オンスクリーンのFramebufferを構築します。  
 ※Apple GLESの場合は、CAEAGLLayerを指定したrenderbufferStorageメソッドで実行します。
 ```
 - (void)setupOnscreenResources
@@ -85,3 +85,4 @@ axgl/external/glslang
 SPIRV-Cross:
 axgl/external/SPIRV-Cross
 
+OpenGLは Hewlett Packard Enterprise の米国およびその他の国における商標または登録商標です。
