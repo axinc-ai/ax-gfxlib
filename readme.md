@@ -1,4 +1,4 @@
-# ax Rendering Library
+# ax Graphics Library
 
 既存グラフィックスライブラリ上にOpenGLとして機能するレイヤーを構築するソフトウェアライブラリです。
 現在はiOSのMetalバックエンドをサポートしています。
