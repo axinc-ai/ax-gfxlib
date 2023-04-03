@@ -134,7 +134,7 @@ void exampleCreateResources(void* instance)
 	glBindBuffer(GL_UNIFORM_BUFFER, rsc->uboVs);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(c_vs_uniform), &c_vs_uniform, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-	
+
 	// テクスチャ
 	static const uint8_t c_texels[] = {
 		0xff,0xff,0xff,0xff, 0x80,0x80,0x80,0xff, 0xff,0xff,0xff,0xff, 0x80,0x80,0x80,0xff,
@@ -158,7 +158,7 @@ void exampleCreateResources(void* instance)
 	glSamplerParameteri(rsc->sampler, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glSamplerParameteri(rsc->sampler, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glSamplerParameteri(rsc->sampler, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	
+
 	// シェーダ
 	const GLchar* src;
 	GLint compile_status;
@@ -259,6 +259,10 @@ void exampleDestroyResources(void* instance)
 	if (rsc->sampler != 0) {
 		glDeleteSamplers(1, &rsc->sampler);
 		rsc->sampler = 0;
+	}
+	if (rsc->vao != 0) {
+		glDeleteVertexArrays(1, &rsc->vao);
+		rsc->vao = 0;
 	}
 
 	return;
