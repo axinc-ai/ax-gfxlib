@@ -55,7 +55,7 @@ static const char c_fs_glsl[] = {
 	"layout(binding = 0) uniform sampler2D u_sampler;\n"
 	"layout(location = 0) out vec4 o_frag_color;\n"
 	"void main() {\n"
-	"  vec4 tex_color = texture2D(u_sampler, v_texcoord);\n"
+	"  vec4 tex_color = texture(u_sampler, v_texcoord);\n"
 	"  o_frag_color = v_color * tex_color * u_color;\n"
 	"}\n"
 };
@@ -125,7 +125,7 @@ void exampleCreateResources(void* instance)
 	// バッファをアンバインド
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	
+
 	// Uniformバッファ
 	static const VsUniforms c_vs_uniform = {
 		{1.0f,0.0f,0.0f,0.0f, 0.0f,1.0f,0.0f,0.0f, 0.0f,0.0f,1.0f,0.0f, 0.0f,0.0f,0.0f,1.0f}
