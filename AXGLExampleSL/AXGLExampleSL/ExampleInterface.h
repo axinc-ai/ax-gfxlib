@@ -6,15 +6,15 @@
 extern "C" {
 #endif
 
-// 初期化
+// Initialization
 void* exampleInitialize(void);
-// 終了
+// Termination
 void exampleTerminate(void* instance);
-// リソース作成
+// Create GLES resources
 void exampleCreateResources(void* instance);
-// リソース破棄
+// Destroy GLES resources
 void exampleDestroyResources(void* instance);
-// 描画
+// Render the scene
 void exampleRender(void* instance, uint32_t framebuffer);
 
 #ifdef __cplusplus
