@@ -14,7 +14,7 @@ void utilRotateZMat4(float* mat, float rad);
 void utilTranslateMat4(float* mat, float x, float y, float z);
 void utilScaleMat4(float* mat, float x, float y, float z);
 void utilMultiplyMat4(float* dst, const float* mat_l, const float* mat_r);
-// NOTE: OrthoはGL仕様のProjection行列であり、Z軸反転を含む
+// NOTE: Ortho is the projection matrix of GL specification, including Z-axis flip
 void utilOrthoMat4(float* mat, float left, float right, float bottom, float top, float znear, float zfar);
 
 #ifdef __cplusplus

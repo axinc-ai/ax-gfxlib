@@ -1,5 +1,5 @@
 // Example.cpp
-// GLサンプルプログラム
+// GLES sample program
 #if 1
 #include <axgl/ES3/gl.h>
 #include <axgl/ES3/glext.h>
@@ -28,7 +28,7 @@ typedef struct ExampleResources_t {
 } ExampleResources;
 static ExampleResources s_resources;
 
-// 頂点シェーダGLSL
+// Vertex shader GLSL
 static const char c_vs_glsl[] = {
 	"#version 300 es\n"
 	"layout(location = 0) in vec3 a_position;\n"
@@ -45,7 +45,7 @@ static const char c_vs_glsl[] = {
 	"  gl_Position = (vs_ubo.mvp * vec4(a_position, 1.0));\n"
 	"}\n"
 };
-// フラグメントシェーダGLSL
+// Fragment shader GLSL
 static const char c_fs_glsl[] = {
 	"#version 300 es\n"
 	"precision mediump float;\n"
@@ -60,25 +60,25 @@ static const char c_fs_glsl[] = {
 	"}\n"
 };
 
-// 初期化
+// Initialization
 void* exampleInitialize()
 {
-	// 必要なら初期化の処理
+	// Execute initialization if necessary
 	return static_cast<void*>(&s_resources);
 }
 
-// 終了
+// Termination
 void exampleTerminate(void* instance)
 {
 	if (instance == nullptr) {
 		return;
 	}
 	exampleDestroyResources(instance);
-	// 必要なら終了処理
+	// Execute termination if necessary
 	return;
 }
 
-// リソース作成
+// Create GLES resources
 void exampleCreateResources(void* instance)
 {
 	if (instance == nullptr) {
@@ -86,7 +86,7 @@ void exampleCreateResources(void* instance)
 	}
 	ExampleResources* rsc = reinterpret_cast<ExampleResources*>(instance);
 
-	// 頂点位置
+	// Vertex positions
 	static const float c_positions[] = {
 		-0.5f,-0.5f,-0.5f, -0.5f, 0.5f,-0.5f, -0.5f,-0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
 		-0.5f, 0.5f, 0.5f,  0.5f, 0.5f, 0.5f, -0.5f,-0.5f, 0.5f,  0.5f,-0.5f, 0.5f,
@@ -98,7 +98,7 @@ void exampleCreateResources(void* instance)
 	glGenBuffers(1, &rsc->vboPosition);
 	glBindBuffer(GL_ARRAY_BUFFER, rsc->vboPosition);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(c_positions), c_positions, GL_STATIC_DRAW);
-	// 頂点色
+	// Vertex colors
 	static const float c_color[] = {
 		1.0f,0.0f,0.0f,1.0f, 1.0f,0.0f,0.0f,1.0f, 1.0f,0.0f,0.0f,1.0f, 1.0f,0.0f,0.0f,1.0f,
 		0.0f,1.0f,0.0f,1.0f, 0.0f,1.0f,0.0f,1.0f, 0.0f,1.0f,0.0f,1.0f, 0.0f,1.0f,0.0f,1.0f,
@@ -110,7 +110,7 @@ void exampleCreateResources(void* instance)
 	glGenBuffers(1, &rsc->vboColor);
 	glBindBuffer(GL_ARRAY_BUFFER, rsc->vboColor);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(c_color), c_color, GL_STATIC_DRAW);
-	// テクスチャ座標
+	// Texture coordinates
 	static const float c_texcoords[] = {
 		0.0f,1.0f, 0.0f,0.0f, 1.0f,1.0f, 1.0f,0.0f,
 		0.0f,0.0f, 1.0f,0.0f, 0.0f,1.0f, 1.0f,1.0f,
@@ -122,11 +122,11 @@ void exampleCreateResources(void* instance)
 	glGenBuffers(1, &rsc->vboTexCoord);
 	glBindBuffer(GL_ARRAY_BUFFER, rsc->vboTexCoord);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(c_texcoords), c_texcoords, GL_STATIC_DRAW);
-	// バッファをアンバインド
+	// Unbind buffers
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	// Uniformバッファ
+	// Uniform buffer
 	static const VsUniforms c_vs_uniform = {
 		{1.0f,0.0f,0.0f,0.0f, 0.0f,1.0f,0.0f,0.0f, 0.0f,0.0f,1.0f,0.0f, 0.0f,0.0f,0.0f,1.0f}
 	};
@@ -135,7 +135,7 @@ void exampleCreateResources(void* instance)
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(c_vs_uniform), &c_vs_uniform, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-	// テクスチャ
+	// Texture
 	static const uint8_t c_texels[] = {
 		0xff,0xff,0xff,0xff, 0x80,0x80,0x80,0xff, 0xff,0xff,0xff,0xff, 0x80,0x80,0x80,0xff,
 		0x80,0x80,0x80,0xff, 0xff,0xff,0xff,0xff, 0x80,0x80,0x80,0xff, 0xff,0xff,0xff,0xff,
@@ -152,14 +152,14 @@ void exampleCreateResources(void* instance)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 4, 4, 0, GL_RGBA, GL_UNSIGNED_BYTE, c_texels);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	// サンプラ
+	// Sampler
 	glGenSamplers(1, &rsc->sampler);
 	glSamplerParameteri(rsc->sampler, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glSamplerParameteri(rsc->sampler, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glSamplerParameteri(rsc->sampler, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glSamplerParameteri(rsc->sampler, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	// シェーダ
+	// Shaders
 	const GLchar* src;
 	GLint compile_status;
 	src = c_vs_glsl;
@@ -219,13 +219,13 @@ void exampleCreateResources(void* instance)
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	// 回転角を初期化
+	// Initialize the rotation angle
 	rsc->rotY = 0.0f;
 
 	return;
 }
 
-// リソース破棄
+// Destroy GLES resources
 void exampleDestroyResources(void* instance)
 {
 	if (instance == nullptr) {
@@ -268,14 +268,14 @@ void exampleDestroyResources(void* instance)
 	return;
 }
 
-// 描画
+// Render the scene
 void exampleRender(void* instance, uint32_t framebuffer)
 {
 	if (instance == nullptr) {
 		return;
 	}
 	ExampleResources* rsc = reinterpret_cast<ExampleResources*>(instance);
-	// Viewが管理するframebufferをバインドして描画
+	// Bind framebuffer managed by UIView
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
 	// Projection matrix
@@ -296,23 +296,23 @@ void exampleRender(void* instance, uint32_t framebuffer)
 		utilMultiplyMat4(pm, m0, m1);
 	}
 
-	// クリア
+	// Clear
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClearDepthf(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// プログラムを設定
+	// Set the program object to current rendering state
 	glUseProgram(rsc->program);
 
-	// Uniform設定
-	// u_color : location未指定のため取得
+	// Set values to a uniform variable
+	// u_color : Get a location because it is not specified to "u_color"
 	GLint loc_u_color = glGetUniformLocation(rsc->program, "u_color");
 	if (loc_u_color >= 0) {
 		static const float fs_color[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glUniform4fv(loc_u_color, 1, fs_color);
 	}
 
-	// Uniformバッファを更新して設定
+	// Update uniform buffers
 	VsUniforms vs_uniform;
 	{
 		// Model-View matrix
@@ -330,10 +330,10 @@ void exampleRender(void* instance, uint32_t framebuffer)
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	glBindBufferBase(GL_UNIFORM_BUFFER, 0, rsc->uboVs);
 
-	// テクスチャを設定
+	// Bind the texture object
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, rsc->texture);
-	// サンプラを設定
+	// Bind the sampler object
 	glBindSampler(0, rsc->sampler);
 		
 	glEnable(GL_DEPTH_TEST);
@@ -342,7 +342,7 @@ void exampleRender(void* instance, uint32_t framebuffer)
 	glFrontFace(GL_CW);
 	glEnable(GL_CULL_FACE);
 
-	// 描画
+	// Draw a cube
 	glBindVertexArray(rsc->vao);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 24);
 	glBindVertexArray(0);

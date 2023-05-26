@@ -1,5 +1,5 @@
 // MetalView.m
-// NOTE: Appleの<EAGL.h>との多重includeを避けるため、先にinclude
+// NOTE: Include first to avoid multiple include with Apple's <EAGL.h>
 #include <axgl/EAGL.h>
 #include <axgl/EAGLDrawable.h>
 #include <axgl/ES3/gl.h>
@@ -30,7 +30,7 @@
 
 - (void)createInitialResources
 {
-	// EAGLContext(AXGL版)を作成
+	// Create EAGLContext (AXGL version)
 	EAGLRenderingAPI api = kEAGLRenderingAPIOpenGLES3;
 	_context = [[EAGLContext alloc] initWithAPI:api];
 	if (_context == NULL) {
@@ -52,7 +52,7 @@
 
 - (void)initialize
 {
-	// デフォルトデバイスを作成して、MetalのLayerを設定
+	// Create a default device and set to CAMetalLayer
 	_metalLayer = (CAMetalLayer*)[self layer];
 	_device = MTLCreateSystemDefaultDevice();
 	_metalLayer.device = _device;
@@ -75,26 +75,26 @@
 
 - (void)setupOnscreenResources
 {
-	// コンテキストを設定
+	// Set the current context
 	BOOL res = [EAGLContext setCurrentContext:_context];
 	if (res) {
-		// CAMetalLayerをStorageに指定してRenderbufferを作成
+		// Create a renderbuffer by specifying CAMetalLayer as a storage
 		glGenRenderbuffers(1, &_colorRenderbuffer);
 		glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
 		[_context renderbufferStorageFromLayer:GL_RENDERBUFFER fromLayer:_metalLayer];
-		// 深度のRenderbufferを作成
+		// Create a depth renderbuffer
 		GLsizei rb_width = (GLsizei)([_metalLayer drawableSize].width);
 		GLsizei rb_height = (GLsizei)([_metalLayer drawableSize].height);
 		glGenRenderbuffers(1, &_depthRenderbuffer);
 		glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderbuffer);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, rb_width, rb_height);
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
-		// Framebufferにアタッチする
+		// Attach renderbuffers to the framebuffer
 		glGenFramebuffers(1, &_framebuffer);
 		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderbuffer);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderbuffer);
-		// コンテキストを外しておく
+		// Release the current context
 		[EAGLContext setCurrentContext:nil];
 	}
 }
@@ -138,7 +138,7 @@
 	BOOL res = [EAGLContext setCurrentContext:_context];
 	if (res) {
 		exampleRender(_exampleInstance, _framebuffer);
-		// NOTE: CAMetalLayerがカレントRenderbufferでない場合、glBindRenderbuffer()
+		// NOTE: Call glBindRenderbuffer() if CAMetalLayer is not the current renderbuffer
 		glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
 		BOOL present_res = [_context presentRenderbuffer:GL_RENDERBUFFER];
 		if (!present_res) {
