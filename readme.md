@@ -18,7 +18,7 @@ AXGLExample/AXGLExample.xcodeproj
 
 ターゲットを選択してProduct->Buildにてビルドを行います。
 
-### サンプルプログラム
+### AXGLExample : サンプルプログラム
 
 Metal上でGLESを動作させることから、下記のような実装となっています。
 
@@ -73,6 +73,14 @@ MetalのDrawableはGLESと異なるため、CAMetalLayerをストレージに指
   }
 }
 ```
+
+### AXGLExampleSL : スタティックライブラリを使用したサンプル
+
+libaxgl.a のスタティックライブラリを作成して、アプリケーションに使用するサンプルです。
+サンプルプログラムのソースは AXGLExample と同一です。
+
+Xcodeから下記のプロジェクトを開いてビルドを行います。  
+AXGLExampleSL/AXGLExampleSL.xcodeproj
 
 ## 留意点
 
