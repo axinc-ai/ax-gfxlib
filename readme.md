@@ -94,3 +94,6 @@ SPIRV-Cross:
 axgl/external/SPIRV-Cross
 
 OpenGLは Hewlett Packard Enterprise の米国およびその他の国における商標または登録商標です。
+
+## Software licence
+The files in this repository are licensed under AGPLv3. For third parties' programs, see corresponding directories under /axgl/external. If you need the commercial license for our AGPLv3 parts, please contact to contact@axinc.jp
