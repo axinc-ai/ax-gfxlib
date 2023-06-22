@@ -1,3 +1,5 @@
-*.xcodeproj/*
+*.xcodeproj/
 !*.xcodeproj/project.pbxproj
+axgl/build/xcode/build/
+libaxgl.a
 .DS_Store
