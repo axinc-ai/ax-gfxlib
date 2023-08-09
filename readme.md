@@ -17,10 +17,6 @@ For many years, OpenGLES has served as a standard in graphics programming. Howev
 
 The technological landscape with Apple is ever-evolving. The deprecation of OpenGLES could significantly impact many developers. axgl was developed as the optimal tool to bridge this technological divide. To safeguard your past investments while smoothly transitioning to future tech, consider axgl as your go-to solution.
 
-## Other platform support
-
-[ax](https://axinc.jp/en/) is a company that specializes in low-level API implementations of 3D Graphics and AI on a variety of hardware. If you are interested in implementing OpenGL in other environments(e.g. Vulkan, DX12), please contact us at contact@axinc.jp.
-
 ## Metal backend for iOS
 
 ### Development Environment
@@ -98,6 +94,9 @@ iThis is a sample that creates a static library of libaxgl.a and uses it in an a
 Open the following project from Xcode and build it.
 AXGLExampleSL/AXGLExampleSL.xcodeproj
 
+## Other platform support
+
+[ax](https://axinc.jp/en/) is a company that specializes in low-level API implementations of 3D Graphics and AI on a variety of hardware. If you are interested in implementing OpenGL in other environments(e.g. Vulkan, DX12), please contact us at contact@axinc.jp.
 
 ## Note
 This software uses glslang and SPIRV-Cross. Please refer to the following directory for the license.
